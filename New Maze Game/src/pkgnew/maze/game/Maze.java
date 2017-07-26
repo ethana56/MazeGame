@@ -38,24 +38,25 @@ public class Maze {
     }
     
     private void generateMaze(Point currentPoint) {
-        
+       List<Point> backTrack = new ArrayList<>();
        Point fromPoint = new Point(currentPoint.getX(), currentPoint.getY());
-        
        while (true) {
-           Direction directionToGo = Direction.getRandom();
-           if (noPossibleMoves(fromPoint)) {
-               getSpace(fromPoint).setHasBeenVisited(true);
-               return;
-           }
-           if (possibleMove(fromPoint, directionToGo)) {
-               Point toPoint = new Point(fromPoint.getX(), fromPoint.getY());
-               toPoint.move(directionToGo);
-               getSpace(fromPoint).removeWall(directionToGo);
-               getSpace(toPoint).removeWall(Direction.getOpposite(directionToGo));
-               getSpace(fromPoint).setHasBeenVisited(true);
-               generateMaze(toPoint);
-           } 
-       }
+            while (true) {
+                Direction directionToGo = Direction.getRandom();
+                if (noPossibleMoves(fromPoint)) {
+                    getSpace(fromPoint).setHasBeenVisited(true);
+                    return;
+                }
+                if (possibleMove(fromPoint, directionToGo)) {
+                    Point toPoint = new Point(fromPoint.getX(), fromPoint.getY());
+                    toPoint.move(directionToGo);
+                    getSpace(fromPoint).removeWall(directionToGo);
+                    getSpace(toPoint).removeWall(Direction.getOpposite(directionToGo));
+                    getSpace(fromPoint).setHasBeenVisited(true);
+                    generateMaze(toPoint);
+                } 
+            }
+        }
     }
     
     private boolean isOutOfBounds(Point point) {
