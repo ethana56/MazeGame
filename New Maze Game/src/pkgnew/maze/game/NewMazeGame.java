@@ -2,27 +2,31 @@
 package pkgnew.maze.game;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 import javafx.scene.shape.Line;
 
 import javafx.stage.Stage;
 
-public class NewMazeGame extends Application {
+public class NewMazeGame extends Application implements EventHandler<ActionEvent> {
     
     private static Maze maze;
     
     public static void main(String[] args) {
-        NewMazeGame.maze = new Maze(50, 50);
+        NewMazeGame.maze = new Maze(10, 10);
+        
         launch(args);
     }
     
     private Parent createContent() {
-        int lineLength = 15;
+        int lineLength = 20;
         Pane root = new Pane();
-        root.setPrefSize(600, 600);
+        root.setPrefSize(1000, 1000);
         
         for (int y = 0; y < this.maze.getHeight(); y++) {
             for (int x = 0; x < this.maze.getWidth(); x++) {
@@ -30,11 +34,15 @@ public class NewMazeGame extends Application {
                 
             }
         }
+        Button button = new Button("Solve");
+        root.getChildren().add(button);
+        button.setLayoutX(lineLength * this.maze.getWidth());
+        button.setOnAction(this);
         return root;
     }
     
     private void createSpaceSquare(Pane pane, Space space, int x, int y) {
-        int lineLength = 15;
+        int lineLength = 20;
         if (space.isWall(Direction.LEFT)) {
             Line lineLeft = new Line(x, y, x, y + lineLength);
             pane.getChildren().add(lineLeft);
@@ -59,6 +67,11 @@ public class NewMazeGame extends Application {
         primaryStage.setTitle("Maze");
         primaryStage.setScene(new Scene(createContent()));
         primaryStage.show();
+        
+    }
+
+    @Override
+    public void handle(ActionEvent event) {
         
     }
     
