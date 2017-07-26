@@ -15,12 +15,12 @@ public class NewMazeGame extends Application {
     private static Maze maze;
     
     public static void main(String[] args) {
-        NewMazeGame.maze = new Maze(20, 20);
+        NewMazeGame.maze = new Maze(50, 50);
         launch(args);
     }
     
     private Parent createContent() {
-        int lineLength = 16;
+        int lineLength = 15;
         Pane root = new Pane();
         root.setPrefSize(600, 600);
         
@@ -34,7 +34,7 @@ public class NewMazeGame extends Application {
     }
     
     private void createSpaceSquare(Pane pane, Space space, int x, int y) {
-        int lineLength = 16;
+        int lineLength = 15;
         if (space.isWall(Direction.LEFT)) {
             Line lineLeft = new Line(x, y, x, y + lineLength);
             pane.getChildren().add(lineLeft);
