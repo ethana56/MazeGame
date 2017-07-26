@@ -15,7 +15,7 @@ public class NewMazeGame extends Application {
     private static Maze maze;
     
     public static void main(String[] args) {
-        NewMazeGame.maze = new Maze(20, 20);
+        NewMazeGame.maze = new Maze(200, 200);
         launch(args);
     }
     

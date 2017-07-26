@@ -58,6 +58,7 @@ public class Maze {
                     getSpace(toPoint).removeWall(Direction.getOpposite(directionToGo));
                     getSpace(fromPoint).setHasBeenVisited(true);
                     backTrack.add(toPoint);
+                    break;
                     } 
                 }
             } 
