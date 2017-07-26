@@ -37,15 +37,19 @@ public class Maze {
         this.spaces.get(this.spaces.size() - 1).removeWall(Direction.DOWN);
     }
     
-    private void generateMaze(Point currentPoint) {
+    private void generateMaze(Point initialPoint) {
        List<Point> backTrack = new ArrayList<>();
-       Point fromPoint = new Point(currentPoint.getX(), currentPoint.getY());
-       while (true) {
+       backTrack.add(initialPoint);
+        
+       while (!backTrack.isEmpty()) {
+            Point currentPoint = backTrack.get(backTrack.size() - 1);
+            Point fromPoint = new Point(currentPoint.getX(), currentPoint.getY());
             while (true) {
                 Direction directionToGo = Direction.getRandom();
                 if (noPossibleMoves(fromPoint)) {
                     getSpace(fromPoint).setHasBeenVisited(true);
-                    return;
+                    backTrack.remove(fromPoint);
+                    break;
                 }
                 if (possibleMove(fromPoint, directionToGo)) {
                     Point toPoint = new Point(fromPoint.getX(), fromPoint.getY());
@@ -53,11 +57,11 @@ public class Maze {
                     getSpace(fromPoint).removeWall(directionToGo);
                     getSpace(toPoint).removeWall(Direction.getOpposite(directionToGo));
                     getSpace(fromPoint).setHasBeenVisited(true);
-                    generateMaze(toPoint);
-                } 
-            }
-        }
-    }
+                    backTrack.add(toPoint);
+                    } 
+                }
+            } 
+       }
     
     private boolean isOutOfBounds(Point point) {
         return point.getX() < 0 || point.getY() < 0 || point.getX() > this.width - 1 || 
