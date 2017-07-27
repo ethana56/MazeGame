@@ -18,7 +18,7 @@ public class NewMazeGame extends Application implements EventHandler<ActionEvent
     private static Maze maze;
     
     public static void main(String[] args) {
-        NewMazeGame.maze = new Maze(10, 10);
+        NewMazeGame.maze = new Maze(100, 100);
         
         launch(args);
     }

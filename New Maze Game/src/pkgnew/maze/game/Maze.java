@@ -3,15 +3,19 @@ package pkgnew.maze.game;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Maze {
     private int width;
     private int height;
     private List<Space> spaces;
+    private Map<Point, Boolean> pointsVisited;
     int counter;
     public Maze(int width, int height) {
         this.spaces = new ArrayList<>();
+        this.pointsVisited = new HashMap<>();
         this.width = width;
         this.height = height;
         generateGrid(width, height);
@@ -31,12 +35,13 @@ public class Maze {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 this.spaces.add(new Space(x, y));
+                this.pointsVisited.put(new Point(x, y), false);
             }
         }
         this.spaces.get(0).removeWall(Direction.LEFT);
         this.spaces.get(this.spaces.size() - 1).removeWall(Direction.DOWN);
     }
-    
+    //the starting space is always 0,0 and ending is always width,height
     private void generateMaze(Point initialPoint) {
        List<Point> backTrack = new ArrayList<>();
        backTrack.add(initialPoint);
@@ -47,7 +52,7 @@ public class Maze {
             while (true) {
                 Direction directionToGo = Direction.getRandom();
                 if (noPossibleMoves(fromPoint)) {
-                    getSpace(fromPoint).setHasBeenVisited(true);
+                    setVisited(fromPoint);
                     backTrack.remove(fromPoint);
                     break;
                 }
@@ -56,7 +61,7 @@ public class Maze {
                     toPoint.move(directionToGo);
                     getSpace(fromPoint).removeWall(directionToGo);
                     getSpace(toPoint).removeWall(Direction.getOpposite(directionToGo));
-                    getSpace(fromPoint).setHasBeenVisited(true);
+                    setVisited(fromPoint);
                     backTrack.add(toPoint);
                     break;
                     } 
@@ -87,7 +92,7 @@ public class Maze {
         if (isOutOfBounds(pointMove)) {
             return false;
         }
-        if (getSpace(pointMove).hasBeenVisited()) {
+        if (hasBeenVisited(pointMove)) {
             return false;
         }
         
@@ -101,6 +106,14 @@ public class Maze {
             }
         }
         return new Space(0, 0);
+    }
+    
+    public void setVisited(Point point) {
+        this.pointsVisited.put(point, true);
+    }
+    
+    public boolean hasBeenVisited(Point point) {
+        return this.pointsVisited.get(point);
     }
     
     

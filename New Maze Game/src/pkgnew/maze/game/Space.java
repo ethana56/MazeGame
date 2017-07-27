@@ -8,13 +8,21 @@ public class Space {
     private boolean wallLeft;
     private boolean wallUp;
     private boolean wallDown;
+    private boolean partOfPath;
     public Space(int x, int y) {
         this.point = new Point(x, y);
         this.wallRight = true;
         this.wallLeft = true;
         this.wallUp = true;
         this.wallDown = true;
-        this.hasBeenVisited = false;
+    }
+    
+    public void setPartOfPath(boolean bool) {
+        this.partOfPath = bool;
+    }
+    
+    public boolean isPartOfPath() {
+        return this.partOfPath;
     }
     
     public boolean isWall(Direction direction) {
@@ -46,15 +54,6 @@ public class Space {
     public Point getPoint() {
         return this.point;
     }
-    
-    public boolean hasBeenVisited() {
-        return this.hasBeenVisited;
-    }
-    
-    public void setHasBeenVisited(boolean bool) {
-        this.hasBeenVisited = bool;
-    }
-    
     
     @Override
     public String toString() {
