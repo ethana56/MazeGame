@@ -48,20 +48,19 @@ public class Maze {
         
        while (!backTrack.isEmpty()) {
             Point currentPoint = backTrack.get(backTrack.size() - 1);
-            Point fromPoint = new Point(currentPoint.getX(), currentPoint.getY());
             while (true) {
                 Direction directionToGo = Direction.getRandom();
-                if (noPossibleMoves(fromPoint)) {
-                    setVisited(fromPoint);
-                    backTrack.remove(fromPoint);
+                if (noPossibleMoves(currentPoint)) {
+                    setVisited(currentPoint);
+                    backTrack.remove(currentPoint);
                     break;
                 }
-                if (possibleMove(fromPoint, directionToGo)) {
-                    Point toPoint = new Point(fromPoint.getX(), fromPoint.getY());
+                if (possibleMove(currentPoint, directionToGo)) {
+                    Point toPoint = new Point(currentPoint.getX(), currentPoint.getY());
                     toPoint.move(directionToGo);
-                    getSpace(fromPoint).removeWall(directionToGo);
+                    getSpace(currentPoint).removeWall(directionToGo);
                     getSpace(toPoint).removeWall(Direction.getOpposite(directionToGo));
-                    setVisited(fromPoint);
+                    setVisited(currentPoint);
                     backTrack.add(toPoint);
                     break;
                     } 
@@ -106,6 +105,10 @@ public class Maze {
             }
         }
         return new Space(0, 0);
+    }
+    
+    public List<Space> getSpaces() {
+        return this.spaces;
     }
     
     public void setVisited(Point point) {
