@@ -1,6 +1,10 @@
 
 package pkgnew.maze.game;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import ethan.solver.domain.Solver;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,7 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 import javafx.stage.Stage;
@@ -21,8 +25,10 @@ import javafx.stage.Stage;
 public class NewMazeGame extends Application implements EventHandler<ActionEvent> {
     
     private Maze maze;
+    private int mazeWidth;
+    private int mazeHeight;
     private int spaceSize;
-    private Scene inputScene, mazeScene, solveScene;
+    private List<Point> solutionPoints = new ArrayList<>(); 
     private Stage window;
     
     @Override
@@ -72,6 +78,9 @@ public class NewMazeGame extends Application implements EventHandler<ActionEvent
     private void createContentMazeScreen(int mazeWidth, int  mazeHeight, int spaceSize) {
         this.maze = new Maze(mazeWidth, mazeHeight);
         this.spaceSize = spaceSize;
+        this.mazeWidth = mazeWidth;
+        this.mazeHeight = mazeHeight;
+        this.spaceSize = spaceSize;
         
         
         Pane root = new Pane();
@@ -110,12 +119,22 @@ public class NewMazeGame extends Application implements EventHandler<ActionEvent
             Line lineDown = new Line(x, y + this.spaceSize, x + this.spaceSize, y + this.spaceSize);
             pane.getChildren().add(lineDown);
         }
+        if (this.solutionPoints.equals(new Point(x, y))) {
+        		Circle circle = new Circle(this.spaceSize / 2);
+        		circle.setCenterX(x);
+        		circle.setCenterY(y);
+        		pane.getChildren().add(circle);
+                        System.out.println("");
+        }
         
     }
     
     @Override
     public void handle(ActionEvent event) {
-        
+        Solver solver = new Solver(this.maze);
+        List<Point> solutionPoints = solver.getSolutionPoints();
+        this.solutionPoints = solutionPoints;
+        createContentMazeScreen(this.mazeWidth, this.mazeHeight, this.spaceSize);
     }
     
     public static void main(String[] args) {

@@ -3,11 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Ethan%20Abrams/Desktop/RealMazeGame/MazeGame/New%20Maze%20Game/src/pkgnew/maze/game/Point.java</file>
-            <file>file:/C:/Users/Ethan%20Abrams/Desktop/RealMazeGame/MazeGame/New%20Maze%20Game/src/pkgnew/maze/game/Direction.java</file>
-            <file>file:/C:/Users/Ethan%20Abrams/Desktop/RealMazeGame/MazeGame/New%20Maze%20Game/src/pkgnew/maze/game/Maze.java</file>
-            <file>file:/C:/Users/Ethan%20Abrams/Desktop/RealMazeGame/MazeGame/New%20Maze%20Game/src/pkgnew/maze/game/NewMazeGame.java</file>
-            <file>file:/C:/Users/Ethan%20Abrams/Desktop/RealMazeGame/MazeGame/New%20Maze%20Game/src/pkgnew/maze/game/Space.java</file>
+            <file>file:/Users/ethanabrams/Desktop/MazeGameFolder/MazeGame/New%20Maze%20Game/src/ethan/solver/domain/Solver.java</file>
+            <file>file:/Users/ethanabrams/Desktop/MazeGameFolder/MazeGame/New%20Maze%20Game/src/pkgnew/maze/game/Maze.java</file>
+            <file>file:/Users/ethanabrams/Desktop/MazeGameFolder/MazeGame/New%20Maze%20Game/src/pkgnew/maze/game/Direction.java</file>
+            <file>file:/Users/ethanabrams/Desktop/MazeGameFolder/MazeGame/New%20Maze%20Game/src/pkgnew/maze/game/NewMazeGame.java</file>
         </group>
     </open-files>
 </project-private>
