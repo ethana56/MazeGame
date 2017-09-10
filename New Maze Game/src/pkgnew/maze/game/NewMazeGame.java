@@ -92,12 +92,12 @@ public class NewMazeGame extends Application implements EventHandler<ActionEvent
                 
             }
         }
-        Button button = new Button("Solve");
-        root.getChildren().add(button);
-        button.setLayoutX(this.spaceSize * this.maze.getWidth());
-        button.setOnAction(this);
-        root.setPrefSize((mazeWidth * this.spaceSize) + button.getWidth() * 2, mazeHeight * this.spaceSize);
-        System.out.println(button.getWidth());
+        Button solveButton = new Button("Solve");
+        root.getChildren().add(solveButton);
+        solveButton.setLayoutX(this.spaceSize * this.maze.getWidth());
+        solveButton.setOnAction(this);
+        root.setPrefSize((mazeWidth * this.spaceSize) + solveButton.getWidth() * 2, mazeHeight * this.spaceSize);
+        System.out.println(solveButton.getWidth());
         this.window.setScene(new Scene(root));
     }
     
