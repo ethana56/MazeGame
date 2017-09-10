@@ -24,6 +24,7 @@ public class Solver {
     }
     
     private void solve() {
+        //System.out.println("Hi");
         List<Point> backTrack = new ArrayList<>();
         backTrack.add(new Point(0, 0));
         List<Space> spaces = this.maze.getSpaces();
@@ -31,18 +32,24 @@ public class Solver {
         initializePoints(spaces);
         while(!atLastPoint(backTrack)) {
             Point currentPoint = backTrack.get(backTrack.size() - 1);
+            //System.out.println(backTrack.size());
+            int counter = 0;
+            //System.out.println("Hi");
             while(true) {
-                int counter = 0;
+                System.out.println(currentPoint);
                 if (noPossibleMoves(currentPoint)) {
                     setVisited(currentPoint);
                     backTrack.remove(currentPoint);
+                    //System.out.println("Hi");
                     break;
                 }
                 if (possibleMove(currentPoint, directions[counter])) {
+                    
                     Point toPoint = new Point(currentPoint.getX(), currentPoint.getY());
                     toPoint.move(directions[counter]);
                     setVisited(currentPoint);
                     backTrack.add(toPoint);
+                    //System.out.println("Hi");
                     break;
                 }
                 counter++;
@@ -55,22 +62,29 @@ public class Solver {
     private boolean noPossibleMoves(Point point) {
         int counter = 0;
         Direction[] directions = {Direction.DOWN, Direction.RIGHT, Direction.LEFT, Direction.UP};
-        ArrayList<Direction> dirList = new ArrayList<>(Arrays.asList(directions));
-        for (Direction direction : dirList) {
+        for (Direction direction : directions) {
             if (!possibleMove(point, direction)) {
                 counter++;
             }
         }
+        System.out.println(counter == 4);
         return counter == 4;
     }
     
     private boolean possibleMove(Point point, Direction direction) {
+        Point pointCopy = new Point(point);
+        pointCopy.move(direction);
         if (this.maze.getSpace(point).isWall(direction)) {
             return false;
         }
-        if (hasBeenVisited(point)) {
+        if (hasBeenVisited(pointCopy)) {
             return false;
         }
+        if (isOutOfBounds(pointCopy)) {
+            return false;
+        }
+        
+        
         return true;
     }
     
@@ -94,6 +108,11 @@ public class Solver {
     
     public List<Point> getSolutionPoints() {
         return this.solutionPoints;
+    }
+    
+    private boolean isOutOfBounds(Point point) {
+        return point.getX() < 0 || point.getY() < 0 || point.getX() > this.maze.getWidth() - 1 || 
+                point.getY() > this.maze.getHeight() - 1;
     }
     
     
