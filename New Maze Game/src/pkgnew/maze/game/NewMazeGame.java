@@ -87,7 +87,7 @@ public class NewMazeGame extends Application implements EventHandler<ActionEvent
         
         
         Pane root = new Pane();
-        root.setPrefSize(1000, 1000);
+        root.setPrefSize(1500, 1500);
         
         for (int y = 0; y < this.maze.getHeight(); y++) {
             for (int x = 0; x < this.maze.getWidth(); x++) {
