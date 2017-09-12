@@ -14,42 +14,36 @@ import pkgnew.maze.game.Space;
 
 public class Solver {
     Maze maze;
-    Map<Point, Boolean> visitedPoints;
+    List<Point> visitedPoints;
     List<Point> solutionPoints;
     public Solver(Maze maze) {
         this.maze = maze;
-        this.visitedPoints = new HashMap<>();
+        this.visitedPoints = new ArrayList<>();
         this.solutionPoints = new ArrayList<>();
         solve();
     }
     
     private void solve() {
-        //System.out.println("Hi");
         List<Point> backTrack = new ArrayList<>();
         backTrack.add(new Point(0, 0));
         List<Space> spaces = this.maze.getSpaces();
         Direction[] directions  = {Direction.DOWN, Direction.LEFT, Direction.RIGHT, Direction.UP};
-        initializePoints(spaces);
         while(!atLastPoint(backTrack)) {
             Point currentPoint = backTrack.get(backTrack.size() - 1);
-            //System.out.println(backTrack.size());
+            //System.out.println(backTrack.get(backTrack.size() - 1));
             int counter = 0;
-            //System.out.println("Hi");
             while(true) {
-                System.out.println(currentPoint);
                 if (noPossibleMoves(currentPoint)) {
                     setVisited(currentPoint);
                     backTrack.remove(currentPoint);
-                    //System.out.println("Hi");
                     break;
                 }
                 if (possibleMove(currentPoint, directions[counter])) {
                     
-                    Point toPoint = new Point(currentPoint.getX(), currentPoint.getY());
+                    Point toPoint = new Point(currentPoint);
                     toPoint.move(directions[counter]);
                     setVisited(currentPoint);
                     backTrack.add(toPoint);
-                    //System.out.println("Hi");
                     break;
                 }
                 counter++;
@@ -57,6 +51,7 @@ public class Solver {
         }
         setVisited(backTrack.get(backTrack.size() - 1));
         this.solutionPoints.addAll(backTrack);
+        System.out.println(this.solutionPoints);
     }
     
     private boolean noPossibleMoves(Point point) {
@@ -67,7 +62,7 @@ public class Solver {
                 counter++;
             }
         }
-        System.out.println(counter == 4);
+        
         return counter == 4;
     }
     
@@ -88,22 +83,16 @@ public class Solver {
         return true;
     }
     
-    private void initializePoints(List<Space> spaces) {
-        for (Space spaceTemp : spaces) {
-            this.visitedPoints.put(new Point(spaceTemp.getPoint()), false);
-        }
-    }
-    
     private boolean atLastPoint(List<Point> points) {
-        return points.contains(new Point(this.maze.getWidth(), this.maze.getHeight()));
+        return points.contains(new Point(this.maze.getWidth() - 1, this.maze.getHeight() - 1));
     }
     
     private void setVisited(Point point) {
-        this.visitedPoints.put(point, true);
+        this.visitedPoints.add(point);
     }
     
     private boolean hasBeenVisited(Point point) {
-        return this.visitedPoints.get(point);
+        return this.visitedPoints.contains(point);
     }
     
     public List<Point> getSolutionPoints() {

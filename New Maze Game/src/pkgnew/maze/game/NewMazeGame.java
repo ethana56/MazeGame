@@ -30,6 +30,7 @@ public class NewMazeGame extends Application implements EventHandler<ActionEvent
     private int spaceSize;
     private List<Point> solutionPoints = new ArrayList<>(); 
     private Stage window;
+    private boolean buttonHasBeenPressed = false;
     
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -76,7 +77,9 @@ public class NewMazeGame extends Application implements EventHandler<ActionEvent
     }
     
     private void createContentMazeScreen(int mazeWidth, int  mazeHeight, int spaceSize) {
-        this.maze = new Maze(mazeWidth, mazeHeight);
+        if (!this.buttonHasBeenPressed) {
+            this.maze = new Maze(mazeWidth, mazeHeight);
+        }
         this.spaceSize = spaceSize;
         this.mazeWidth = mazeWidth;
         this.mazeHeight = mazeHeight;
@@ -97,7 +100,7 @@ public class NewMazeGame extends Application implements EventHandler<ActionEvent
         solveButton.setLayoutX(this.spaceSize * this.maze.getWidth());
         solveButton.setOnAction(this);
         root.setPrefSize((mazeWidth * this.spaceSize) + solveButton.getWidth() * 2, mazeHeight * this.spaceSize);
-        System.out.println(solveButton.getWidth());
+        //System.out.println(solveButton.getWidth());
         this.window.setScene(new Scene(root));
     }
     
@@ -119,18 +122,19 @@ public class NewMazeGame extends Application implements EventHandler<ActionEvent
             Line lineDown = new Line(x, y + this.spaceSize, x + this.spaceSize, y + this.spaceSize);
             pane.getChildren().add(lineDown);
         }
-        if (this.solutionPoints.equals(new Point(x, y))) {
-        		Circle circle = new Circle(this.spaceSize / 2);
-        		circle.setCenterX(x);
-        		circle.setCenterY(y);
+        if (this.solutionPoints.contains(new Point(space.getPoint().getX(), space.getPoint().getY()))) {
+        		Circle circle = new Circle(this.spaceSize / 4);
+        		circle.setCenterX(x + 10);
+        		circle.setCenterY(y + 10);
         		pane.getChildren().add(circle);
-                        System.out.println("");
+                        System.out.println("hi");
         }
         
     }
     
     @Override
     public void handle(ActionEvent event) {
+        this.buttonHasBeenPressed = true;
         Solver solver = new Solver(this.maze);
         List<Point> solutionPoints = solver.getSolutionPoints();
         this.solutionPoints = solutionPoints;
